@@ -1,12 +1,12 @@
 'use client';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function ToggleTheme({
   sunIcon,
   moonIcon,
 }: Readonly<{ moonIcon: string; sunIcon: string }>) {
-  const [isDarkMode, setDarkMode] = useState(false);
+  const { isDarkMode, setDarkMode } = useTheme();
 
   const handleClicked = () => {
     setDarkMode(!isDarkMode);
