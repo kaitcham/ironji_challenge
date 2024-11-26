@@ -88,3 +88,74 @@
     }
   }
 }
+
+.hero__info {
+  flex: 1;
+  overflow: hidden;
+  @include flex-column;
+
+  h1 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    span {
+      color: $primaryColor;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    margin-top: 15px;
+  }
+
+  .hero__btn {
+    display: block;
+    width: fit-content;
+    margin-top: 40px;
+    padding: 10px 20px;
+    border: none;
+    background: $primaryColor;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .hero__image {
+    display: none;
+  }
+
+  @include media('md') {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    .hero__btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.125rem;
+    }
+
+    .hero__image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      overflow: hidden;
+    }
+  }
+
+  @include media('lg') {
+    gap: 80px;
+
+    h1 {
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
