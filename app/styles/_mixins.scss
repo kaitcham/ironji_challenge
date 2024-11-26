@@ -1,0 +1,20 @@
+@import 'variables';
+
+@mixin flex($justify: space-between, $align: center) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin flex-column($justify: center, $align: center) {
+  @include flex($justify, $align);
+  flex-direction: column;
+}
+
+@mixin media($breakpoint: 'md') {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}

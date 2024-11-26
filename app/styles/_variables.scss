@@ -1,0 +1,17 @@
+$primaryColor: #ff7f1f;
+$secondaryColor: #503a3a;
+$darkTextColor: #fef4f4;
+$lightTextColor: #252525;
+$darkBackground: #000000;
+$darkForeground: #fef4f4;
+$lightBackground: #ffffff;
+$lightForeground: #2e2828;
+// $lightBackground: #f3f1ff;
+
+$breakpoints: (
+  'xs': 0,
+  'sm': 640px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
