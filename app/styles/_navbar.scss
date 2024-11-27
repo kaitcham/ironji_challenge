@@ -1,0 +1,73 @@
+@use 'abstracts' as *;
+
+.header__container {
+  width: 100%;
+
+  &__navbar {
+    @include flex;
+    padding-top: 15px;
+
+    .logo {
+      @include flex;
+    }
+
+    .right__section {
+      .moon__btn {
+        width: 36px;
+        height: 36px;
+        border: none;
+        padding: 7px;
+        opacity: 0.7;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      .sun__btn {
+        width: 35px;
+        height: 35px;
+        border: none;
+        padding: 5px;
+        opacity: 0.7;
+        cursor: pointer;
+        color: #ff6f00;
+        border-radius: 50%;
+      }
+
+      .login__btn {
+        display: none;
+      }
+    }
+  }
+
+  @include media('md') {
+    &__navbar {
+      padding-top: 20px;
+      padding-right: 30px;
+
+      .logo img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+
+  @include media('lg') {
+    &__navbar {
+      padding-top: 45px;
+      padding-right: 90px;
+
+      .right__section {
+        @include flex;
+        gap: 20px;
+        .login__btn {
+          display: block;
+          color: white;
+          cursor: pointer;
+          padding: 8px 18px;
+          border-radius: 5px;
+          background: $primaryColor;
+        }
+      }
+    }
+  }
+}

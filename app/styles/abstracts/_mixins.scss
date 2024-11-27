@@ -1,4 +1,5 @@
-@import 'variables';
+@use 'sass:map';
+@use 'variables' as *;
 
 @mixin flex($justify: space-between, $align: center) {
   display: flex;
@@ -12,8 +13,8 @@
 }
 
 @mixin media($breakpoint: 'md') {
-  @if map-has-key($breakpoints, $breakpoint) {
-    @media (min-width: map-get($breakpoints, $breakpoint)) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
       @content;
     }
   }

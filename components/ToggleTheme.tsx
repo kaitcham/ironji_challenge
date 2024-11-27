@@ -1,6 +1,6 @@
 'use client';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '@/app/context/ThemeContext';
 
 export default function ToggleTheme({
   sunIcon,
@@ -14,7 +14,10 @@ export default function ToggleTheme({
   };
 
   return (
-    <button className={isDarkMode ? sunIcon : moonIcon} onClick={handleClicked}>
+    <button
+      className={`${isDarkMode ? sunIcon : moonIcon}`}
+      onClick={handleClicked}
+    >
       {isDarkMode ? <SunIcon /> : <MoonIcon />}
     </button>
   );

@@ -1,0 +1,16 @@
+@use 'abstracts' as *;
+
+.root__container {
+  height: 100vh;
+  padding: 0 15px;
+  @include flex-column(flex-start, flex-start);
+
+  @include media('md') {
+    padding-right: 0;
+    padding-left: 30px;
+  }
+
+  @include media('lg') {
+    padding-left: 90px;
+  }
+}
