@@ -1,0 +1,40 @@
+@use 'abstracts' as *;
+
+.dashboard__inner__container__sidebar {
+  display: none;
+
+  @include media('md') {
+    display: block;
+    border-right: 2px solid #f1f5f9;
+    @include flex-column(flex-start, flex-start);
+
+    .logo {
+      padding: 0.75rem 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f1f5f9;
+    }
+
+    .links {
+      width: 100%;
+      border-bottom: 2px solid #f1f5f9;
+      a {
+        padding: 0.55rem;
+        @include flex-column(center, center);
+
+        span {
+          font-size: 14px;
+        }
+
+        &:hover {
+          background: #f1f5f9;
+        }
+
+        &.active {
+          color: $primaryColor;
+          background: #f1f5f9;
+          border-left: 4px solid $primaryColor;
+        }
+      }
+    }
+  }
+}

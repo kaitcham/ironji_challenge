@@ -1,4 +1,5 @@
 import '@/app/styles/_dashboard.scss';
+import SideNavbar from '@/components/SideNavbar';
 
 export default function DashboardLayout({
   children,
@@ -6,7 +7,7 @@ export default function DashboardLayout({
   return (
     <div className="dashboard__container">
       <div className="dashboard__inner__container">
-        <div className="dashboard__inner__container__sidebar">SideBar</div>
+        <SideNavbar />
         <div className="dashboard__inner__container__rightside">
           <div className="dashboard__inner__container__rightside__content">
             <div className="dashboard__inner__container__rightside__content__topbar">
