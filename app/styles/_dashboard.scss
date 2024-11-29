@@ -1,0 +1,32 @@
+@use 'abstracts' as *;
+
+.dashboard__container {
+  height: 100vh;
+  background: #f1f5f9;
+
+  .dashboard__inner__container {
+    height: 100%;
+    display: grid;
+    overflow: hidden;
+    background: white;
+  }
+
+  @include media('md') {
+    .dashboard__inner__container {
+      grid-template-columns: auto 1fr;
+    }
+  }
+
+  @include media('lg') {
+    padding: 1rem 2rem;
+
+    .dashboard__inner__container {
+      border-top-left-radius: 1.5rem;
+      border-bottom-left-radius: 1.5rem;
+    }
+  }
+
+  @include media('xl') {
+    padding: 2rem 4rem;
+  }
+}
