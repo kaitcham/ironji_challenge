@@ -8,7 +8,7 @@ import MobileNavbar from './MobileNavbar';
 export default async function TopNavbar() {
   const session = await auth();
   return (
-    <div className="dashboard__inner__container__rightside__content__topbar">
+    <div className="rightside__content__topbar">
       <Form action="" className="search__field">
         <div className="submit__btn">
           <input name="query" />

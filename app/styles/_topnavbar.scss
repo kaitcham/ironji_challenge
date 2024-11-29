@@ -1,6 +1,6 @@
 @use 'abstracts' as *;
 
-.dashboard__inner__container__rightside__content__topbar {
+.rightside__content__topbar {
   @include flex;
   padding: 0.75rem;
   background: white;
