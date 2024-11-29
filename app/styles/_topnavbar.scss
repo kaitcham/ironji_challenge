@@ -1,0 +1,121 @@
+@use 'abstracts' as *;
+
+.dashboard__inner__container__rightside__content__topbar {
+  @include flex;
+  padding: 0.75rem;
+  background: white;
+
+  .search__field {
+    width: 65%;
+    .submit__btn {
+      width: 100%;
+      position: relative;
+      input {
+        width: 100%;
+        font-size: 0.875rem;
+        padding: 0.5rem 1rem;
+        line-height: 1.25rem;
+        border-radius: 0.5rem;
+        border: 1px solid #e2e8f0;
+        font-family: Poppins, sans-serif;
+      }
+      button {
+        top: 0;
+        bottom: 0;
+        border: none;
+        position: absolute;
+        inset-inline-end: 0;
+        background: inherit;
+        padding-inline-end: 0.75rem;
+        @include flex(center, center);
+      }
+    }
+  }
+
+  .right__section {
+    @include flex;
+    .user__info {
+      @include flex(center, center);
+      img {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+      }
+
+      p {
+        display: none;
+      }
+    }
+
+    .open__menu {
+      border: none;
+      @include flex;
+      background: inherit;
+      margin-left: 0.75rem;
+    }
+
+    .mobile__menu__container {
+      top: 0;
+      left: -100%;
+      width: 65%;
+      z-index: 20;
+      height: 100vh;
+      position: fixed;
+      background-color: white;
+      transition: 0.3s ease-in-out;
+
+      div {
+        width: 100%;
+        padding: 3.75rem 0;
+        @include flex-column(flex-start, flex-start);
+
+        a {
+          width: 100%;
+          padding: 0.75rem 1rem;
+
+          &.active {
+            color: $primaryColor;
+            background: #f1f5f9;
+            border-left: 4px solid $primaryColor;
+          }
+        }
+      }
+    }
+
+    .open__menu[data-open] + .mobile__menu__container {
+      left: 0;
+    }
+  }
+
+  @include media('md') {
+    padding: 1.17rem;
+    .search__field {
+      width: 40%;
+    }
+
+    .right__section {
+      .user__info {
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        background: #f3f4f6;
+        img {
+          width: 1.75rem;
+          height: 1.75rem;
+          border-radius: 50%;
+        }
+        p {
+          display: block;
+        }
+      }
+
+      .open__menu {
+        display: none;
+      }
+
+      .mobile__menu__container {
+        display: none;
+      }
+    }
+  }
+}
