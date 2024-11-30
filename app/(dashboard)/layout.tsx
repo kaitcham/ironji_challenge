@@ -1,4 +1,4 @@
-import '@/app/styles/_dashboard.scss';
+import '@/styles/_dashboard.scss';
 import TopNavbar from '@/components/TopNavbar';
 import SideNavbar from '@/components/SideNavbar';
 

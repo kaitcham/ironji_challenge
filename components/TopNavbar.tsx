@@ -2,7 +2,7 @@ import Form from 'next/form';
 import Image from 'next/image';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { auth } from '@/auth';
-import '@/app/styles/_topnavbar.scss';
+import '@/styles/_topnavbar.scss';
 import MobileNavbar from './MobileNavbar';
 
 export default async function TopNavbar() {

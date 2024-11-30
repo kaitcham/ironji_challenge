@@ -4,7 +4,7 @@ import Image from 'next/image';
 import CarIcon from './Icons/CarIcon';
 import { usePathname } from 'next/navigation';
 import { HomeIcon, ListBulletIcon } from '@heroicons/react/24/outline';
-import '@/app/styles/_sidebar.scss';
+import '@/styles/_sidebar.scss';
 
 export default function SideNavbar() {
   const pathname = usePathname();

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import '@/app/styles/_landing.scss';
+import '@/styles/_landing.scss';
 
 export default function Home() {
   return (

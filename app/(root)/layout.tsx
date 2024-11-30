@@ -1,5 +1,5 @@
 import Navbar from '@/components/Navbar';
-import '@/app/styles/_root.scss';
+import '@/styles/_root.scss';
 
 export default function Layout({
   children,

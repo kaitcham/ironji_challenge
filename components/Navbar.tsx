@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ToggleTheme from './ToggleTheme';
 import { usePathname } from 'next/navigation';
-import '@/app/styles/_navbar.scss';
+import '@/styles/_navbar.scss';
 
 export default function Navbar() {
   const pathname = usePathname();

@@ -1,4 +1,4 @@
-import '@/app/styles/_login.scss';
+import '@/styles/_login.scss';
 import { signIn } from '@/auth';
 
 export default async function Login() {
