@@ -1,5 +1,5 @@
-import '@/app/styles/_dashboard.scss';
 import { auth } from '@/auth';
+import AllTrucksFilters from '@/components/AllTrucksFilters';
 
 export default async function page() {
   const session = await auth();
@@ -7,6 +7,7 @@ export default async function page() {
   return (
     <div className="rightside__content__body">
       <h1>Dashboard</h1>
+      <AllTrucksFilters />
     </div>
   );
 }
