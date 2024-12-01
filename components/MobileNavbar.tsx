@@ -29,7 +29,7 @@ export default function MobileNavbar() {
             href="/dashboard"
             className={pathname === '/dashboard' ? 'active' : ''}
           >
-            Dashboard
+            Trucks
           </CloseButton>
           <CloseButton
             as={Link}

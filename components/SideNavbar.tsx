@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import CarIcon from './Icons/CarIcon';
 import { usePathname } from 'next/navigation';
-import { HomeIcon, ListBulletIcon } from '@heroicons/react/24/outline';
+import { TruckIcon, ListBulletIcon } from '@heroicons/react/24/outline';
 import '@/styles/_sidebar.scss';
 
 export default function SideNavbar() {
@@ -25,8 +25,8 @@ export default function SideNavbar() {
           href="/dashboard"
           className={pathname === '/dashboard' ? 'active' : ''}
         >
-          <HomeIcon width={32} height={32} />
-          <span>Home</span>
+          <TruckIcon width={32} height={32} />
+          <span>Trucks</span>
         </Link>
         <Link
           href="/drivers"
