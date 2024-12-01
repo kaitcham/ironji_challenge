@@ -1,19 +1,35 @@
+'use client';
+import { useTrucks } from '@/app/context/TruckContext';
 import FilterOption from './FilterOption';
 
-interface Filter {
-  title: string;
-  filters: Array<object>;
-}
-
 export default function AllTrucksFilters() {
-  return (
-    <div className="rightside__content__body__filters">
-      <FilterOption text="All Trucks" number={30} isActive={true} />
-      <FilterOption text="All Trucks" number={30} isActive={false} />
-      <FilterOption text="All Trucks" number={30} isActive={false} />
+  const { initialData, selectedOption, SetSelectedOption, refetch } =
+    useTrucks();
+  const options = ['All Trucks', ...new Set(initialData.map((t) => t.status))];
 
+  const getNumber = (option: string) =>
+    option === 'All Trucks'
+      ? initialData.length
+      : initialData.filter((t) => t.status === option).length;
+
+  const handleChange = (option: string) => {
+    SetSelectedOption(option);
+    refetch?.();
+  };
+
+  return (
+    <div className="rightside__content__body__header__filters">
+      {options.map((option) => (
+        <FilterOption
+          key={option}
+          text={option}
+          action={() => handleChange(option)}
+          isActive={selectedOption === option}
+          number={getNumber(option)}
+        />
+      ))}
       <div className="filter__btn">
-        <button>
+        <button popoverTarget="truck-form">
           <span>+</span>
           <span>New truck</span>
         </button>
