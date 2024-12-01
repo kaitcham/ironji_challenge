@@ -34,3 +34,28 @@ a {
 button {
   cursor: pointer;
 }
+
+.loading-state {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 10px solid #ddd;
+  border-top-color: $primaryColor;
+  animation: loading 1s linear infinite;
+}
+@keyframes loading {
+  to {
+    transform: rotate(360deg);
+  }
+}
