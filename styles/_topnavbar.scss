@@ -4,6 +4,10 @@
   @include flex;
   padding: 0.75rem;
   background: white;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  position: sticky;
 
   .search__field {
     width: 65%;
