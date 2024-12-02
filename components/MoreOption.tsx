@@ -7,8 +7,32 @@ import {
   Transition,
 } from '@headlessui/react';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteTruck } from '@/lib/actions';
 
-export default function MoreOption() {
+interface MoreOptionProps {
+  id: string;
+  queryKey: string[];
+  handleEdit: () => void;
+}
+
+export default function MoreOption({
+  id,
+  queryKey,
+  handleEdit,
+}: MoreOptionProps) {
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteTruck(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey });
+    },
+    onError: (error: Error) => {
+      console.error('Failed to update truck status:', error);
+    },
+  });
+
   return (
     <Menu as="div" className="more__options">
       <MenuButton className="more__options__btn">
@@ -31,7 +55,11 @@ export default function MoreOption() {
           </div>
           <hr />
           <div>
-            <MenuItem as="button" className="item">
+            <MenuItem
+              as="button"
+              className="item"
+              onClick={() => deleteMutation.mutate(id)}
+            >
               Delete
             </MenuItem>
           </div>

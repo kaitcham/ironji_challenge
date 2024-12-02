@@ -56,3 +56,14 @@ export async function updateTruckStatus(
 
   return await response.json();
 }
+
+export async function deleteTruck(id: string): Promise<void> {
+  const response = await fetch(`${API_URL}/trucks/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to delete truck: ${errorText}`);
+  }
+}

@@ -5,7 +5,7 @@ import MoreOption from '@/components/MoreOption';
 import { useTrucks } from '@/context/TruckContext';
 import TruckFormModel from '@/components/TruckFormModel';
 import AllTrucksFilters from '@/components/Filters';
-import { TruckStatus } from '@/lib/types';
+import { Truck, TruckStatus } from '@/lib/types';
 import { updateTruckStatus } from '@/lib/actions';
 import '@/styles/_trucks.scss';
 
@@ -26,8 +26,9 @@ export default function Page() {
     },
   });
 
-  const handleChangeStatus = (id: string) => {
-    const truck = trucks?.find((t) => t.id === id);
+  const handleChangeStatus = (truck: Truck) => {
+    const { id } = truck;
+
     if (truck) {
       const newStatus =
         truck.status === TruckStatus.AVAILABLE
@@ -56,7 +57,11 @@ export default function Page() {
               <span className={`${truck.status.toLowerCase()}`}>
                 {truck.status}
               </span>
-              <MoreOption />
+              <MoreOption
+                id={truck.id}
+                queryKey={['trucks', selectedOption]}
+                handleEdit={() => {}}
+              />
             </div>
             <div className="truck__card__content">
               <p>Capacity: {truck.capacity}</p>
@@ -68,7 +73,7 @@ export default function Page() {
                   <input
                     name="status"
                     type="checkbox"
-                    onChange={() => handleChangeStatus(truck.id)}
+                    onChange={() => handleChangeStatus(truck)}
                     checked={truck.status === TruckStatus.DELIVERING}
                     disabled={updateStatusMutation.isPending}
                   />
