@@ -3,8 +3,7 @@ import { useTrucks } from '@/app/context/TruckContext';
 import FilterOption from './FilterOption';
 
 export default function AllTrucksFilters() {
-  const { initialData, selectedOption, SetSelectedOption, refetch } =
-    useTrucks();
+  const { initialData, selectedOption, SetSelectedOption } = useTrucks();
   const options = ['All Trucks', ...new Set(initialData.map((t) => t.status))];
 
   const getNumber = (option: string) =>
@@ -12,18 +11,13 @@ export default function AllTrucksFilters() {
       ? initialData.length
       : initialData.filter((t) => t.status === option).length;
 
-  const handleChange = (option: string) => {
-    SetSelectedOption(option);
-    refetch?.();
-  };
-
   return (
     <div className="rightside__content__body__header__filters">
       {options.map((option) => (
         <FilterOption
           key={option}
           text={option}
-          action={() => handleChange(option)}
+          action={() => SetSelectedOption(option)}
           isActive={selectedOption === option}
           number={getNumber(option)}
         />
