@@ -3,17 +3,25 @@
 import MoreOption from '@/components/MoreOption';
 import { useTrucks } from '@/app/context/TruckContext';
 import TruckFormModel from '@/components/TruckFormModel';
-import AllTrucksFilters from '@/components/AllTrucksFilters';
+import AllTrucksFilters from '@/components/Filters';
 import '@/styles/_trucks.scss';
 
 export default function page() {
   const { trucks } = useTrucks();
+  const { initialData, selectedOption, SetSelectedOption } = useTrucks();
+  const options = ['All Trucks', 'Available', 'Delivering', 'Maintenance'];
 
   return (
     <div className="rightside__content__body">
       <div className="rightside__content__body__header">
         <h1>Dashboard</h1>
-        <AllTrucksFilters />
+        <AllTrucksFilters
+          name="Truck"
+          initialData={initialData}
+          options={options}
+          selectedOption={selectedOption}
+          SetSelectedOption={SetSelectedOption}
+        />
       </div>
       <div className="trucks__container">
         {trucks?.map((truck) => (
