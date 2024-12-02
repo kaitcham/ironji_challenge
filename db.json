@@ -4,31 +4,31 @@
       "id": 1,
       "plate_number": "ABC123",
       "capacity": 50,
-      "status": "available"
+      "status": "Available"
     },
     {
       "id": 2,
       "plate_number": "DEF456",
       "capacity": 75,
-      "status": "delivering"
+      "status": "Delivering"
     },
     {
       "id": 3,
       "plate_number": "GHI789",
       "capacity": 40,
-      "status": "available"
+      "status": "Available"
     },
     {
       "id": 4,
       "plate_number": "JKL012",
       "capacity": 60,
-      "status": "maintenance"
+      "status": "Maintenance"
     },
     {
       "id": 5,
       "plate_number": "MNO345",
       "capacity": 80,
-      "status": "available"
+      "status": "Available"
     }
   ]
 }

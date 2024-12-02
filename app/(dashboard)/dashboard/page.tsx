@@ -19,7 +19,9 @@ export default function page() {
         {trucks?.map((truck) => (
           <div key={truck.id} className="truck__card">
             <div className="truck__card__header">
-              <span className={`${truck.status}`}>{truck.status}</span>
+              <span className={`${truck.status.toLowerCase()}`}>
+                {truck.status}
+              </span>
               <MoreOption />
             </div>
             <div className="truck__card__content">
