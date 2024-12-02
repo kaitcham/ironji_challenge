@@ -2,18 +2,29 @@
 import { useTrucks } from '@/app/context/TruckContext';
 import FilterOption from './FilterOption';
 
-export default function AllTrucksFilters() {
-  const { initialData, selectedOption, SetSelectedOption } = useTrucks();
-  const options = ['All Trucks', ...new Set(initialData.map((t) => t.status))];
+interface FiltersProps<T> {
+  name: string;
+  initialData: T[];
+  options: string[];
+  selectedOption: string;
+  SetSelectedOption: (option: string) => void;
+}
 
+export default function AllTrucksFilters<T>({
+  name,
+  options,
+  initialData,
+  selectedOption,
+  SetSelectedOption,
+}: FiltersProps<T>) {
   const getNumber = (option: string) =>
-    option === 'All Trucks'
+    option === `All ${name}s`
       ? initialData.length
-      : initialData.filter((t) => t.status === option).length;
+      : initialData.filter((data: any) => data.status === option).length;
 
   return (
     <div className="rightside__content__body__header__filters">
-      {options.map((option) => (
+      {options?.map((option) => (
         <FilterOption
           key={option}
           text={option}
@@ -25,7 +36,7 @@ export default function AllTrucksFilters() {
       <div className="filter__btn">
         <button popoverTarget="truck-form">
           <span>+</span>
-          <span>New truck</span>
+          <span>New {name}</span>
         </button>
       </div>
     </div>
