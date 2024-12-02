@@ -5,7 +5,7 @@ export enum TruckStatus {
 }
 
 export interface Truck {
-  id: number;
+  id: string;
   capacity: number;
   status: TruckStatus;
   plate_number: string;

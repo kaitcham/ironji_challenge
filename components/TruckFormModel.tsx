@@ -31,8 +31,7 @@ export default function TruckFormModel() {
     try {
       const { capacity, plate_number } = formData;
       const validated = truckFormSchema.parse({ capacity, plate_number });
-      const newTruck = { ...validated, id: initialData.length + 1 };
-      console.log(newTruck);
+      const newTruck = { ...validated, id: String(initialData.length + 1) };
       createMutation.mutate(newTruck);
     } catch (error: any) {
       SetErrors(error.formErrors.fieldErrors);

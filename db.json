@@ -1,33 +1,39 @@
 {
   "trucks": [
     {
-      "id": 1,
+      "id": "1",
       "plate_number": "ABC123",
       "capacity": 50,
       "status": "Available"
     },
     {
-      "id": 2,
+      "id": "2",
       "plate_number": "DEF456",
       "capacity": 75,
-      "status": "Delivering"
-    },
-    {
-      "id": 3,
-      "plate_number": "GHI789",
-      "capacity": 40,
       "status": "Available"
     },
     {
-      "id": 4,
+      "id": "3",
+      "plate_number": "GHI789",
+      "capacity": 40,
+      "status": "Delivering"
+    },
+    {
+      "id": "4",
       "plate_number": "JKL012",
       "capacity": 60,
       "status": "Maintenance"
     },
     {
-      "id": 5,
+      "id": "5",
       "plate_number": "MNO345",
       "capacity": 80,
+      "status": "Available"
+    },
+    {
+      "id": "6",
+      "capacity": 100,
+      "plate_number": "ABC123",
       "status": "Available"
     }
   ]
