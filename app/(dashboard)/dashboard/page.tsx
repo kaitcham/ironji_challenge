@@ -1,7 +1,7 @@
 'use client';
 
 import MoreOption from '@/components/MoreOption';
-import { useTrucks } from '@/app/context/TruckContext';
+import { useTrucks } from '@/context/TruckContext';
 import TruckFormModel from '@/components/TruckFormModel';
 import AllTrucksFilters from '@/components/Filters';
 import '@/styles/_trucks.scss';

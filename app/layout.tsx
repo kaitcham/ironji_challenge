@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeProvider } from '../context/ThemeContext';
 import '@/styles/globals.scss';
 
 const poppins = Poppins({

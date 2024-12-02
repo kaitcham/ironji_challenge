@@ -1,6 +1,6 @@
 'use client';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/solid';
-import { useTheme } from '@/app/context/ThemeContext';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function ToggleTheme({
   sunIcon,

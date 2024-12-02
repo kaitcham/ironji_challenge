@@ -2,7 +2,7 @@ import '@/styles/_dashboard.scss';
 import TopNavbar from '@/components/TopNavbar';
 import SideNavbar from '@/components/SideNavbar';
 import ReactQueryProvider from '@/app/providers';
-import { TruckProvider } from '../context/TruckContext';
+import { TruckProvider } from '../../context/TruckContext';
 
 export default function DashboardLayout({
   children,

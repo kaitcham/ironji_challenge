@@ -1,5 +1,5 @@
 'use client';
-import { useTrucks } from '@/app/context/TruckContext';
+import { useTrucks } from '@/context/TruckContext';
 import FilterOption from './FilterOption';
 
 interface FiltersProps<T> {

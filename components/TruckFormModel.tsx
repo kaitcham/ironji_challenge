@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { truckFormSchema } from '@/lib/schemas';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { createTruck } from '@/lib/actions';
-import { useTrucks } from '@/app/context/TruckContext';
+import { useTrucks } from '@/context/TruckContext';
 
 export default function TruckFormModel() {
   const queryClient = new QueryClient();
