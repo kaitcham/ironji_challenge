@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trucking Logistics Management System
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a Trucking Logistics Management System built using Next.js with NextAuth for authentication. It simulates the interaction between truck owners, drivers, and customers.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- User Authentication using Google OAuth 2.0 with NextAuth
+- Dashboard displaying summary of available trucks, drivers, and active orders
+- Truck Management: View, add, edit, remove trucks; change truck status
+- Driver Management: View, add, edit, remove drivers; assign driver to truck
+- Order Management: View, add, edit orders; assign driver to order
+- API Integration using React Query
+- Mobile-Friendly Design
+- Error Handling and Form Validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js (v14+)
+- NextAuth for Authentication
+- JSON Server for Backend Simulation
+- React Query for Data Fetching
+- SCSS for Styling
+- React State and Context API for State Management
 
-## Learn More
+## Setup
 
-To learn more about Next.js, take a look at the following resources:
+To run this project locally:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
+   git clone https://github.com/kaitcham/ironji_challenge.git
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install dependencies:
+   npm install
 
-## Deploy on Vercel
+3. Set environment variables:
+   API_URL=****\*\*****\*\*\*****\*\*****
+   AUTH_GOOGLE_SECRET=**\*\*\*\***\*\*\***\*\*\*\***
+   AUTH_SECRET=******\*\*\*\*******\*\*\*******\*\*\*\*******
+   AUTH_GOOGLE_ID=********\*\*********\*\*********\*\*********
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the development server:
+   npm run dev
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Start JSON Server in another terminal:
+   npx json-server --watch db.json --port 3001
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/yourusername/trucking-logistics-system/issues) if you want to contribute or report a bug.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Next.js](https://nextjs.org/)
+- [NextAuth](https://next-auth.js.org/)
+- [React Query](https://react-query.vite-demo.now.expo.dev/)
+- [JSON Server](https://github.com/typicode/json-server)
