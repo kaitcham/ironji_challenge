@@ -8,6 +8,7 @@ import AllTrucksFilters from '@/components/Filters';
 import { Truck, TruckStatus } from '@/lib/types';
 import { updateTruckStatus } from '@/lib/actions';
 import '@/styles/_trucks.scss';
+import { toast } from 'sonner';
 
 export default function Page() {
   const { trucks } = useTrucks();
@@ -20,9 +21,10 @@ export default function Page() {
       updateTruckStatus(id, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
+      return toast.success('Status updated successfully');
     },
     onError: (error: Error) => {
-      console.error('Failed to update truck status:', error);
+      return toast.error(error.message);
     },
   });
 

@@ -9,6 +9,7 @@ import {
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteTruck } from '@/lib/actions';
+import { toast } from 'sonner';
 
 interface MoreOptionProps {
   id: string;
@@ -27,9 +28,10 @@ export default function MoreOption({
     mutationFn: (id: string) => deleteTruck(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey });
+      return toast.success('Truck deleted successfully');
     },
     onError: (error: Error) => {
-      console.error('Failed to update truck status:', error);
+      return toast.error(error.message);
     },
   });
 

@@ -5,6 +5,7 @@ import { truckFormSchema } from '@/lib/schemas';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 import { createTruck } from '@/lib/actions';
 import { useTrucks } from '@/context/TruckContext';
+import { toast } from 'sonner';
 
 export default function TruckFormModel() {
   const queryClient = new QueryClient();
@@ -22,6 +23,10 @@ export default function TruckFormModel() {
       queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
       document.getElementById('truck-form')?.hidePopover();
       refetch?.();
+      return toast.success('Truck added successfully');
+    },
+    onError: (error: Error) => {
+      return toast.error(error.message);
     },
   });
 
