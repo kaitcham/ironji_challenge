@@ -1,15 +1,41 @@
 'use client';
 
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MoreOption from '@/components/MoreOption';
 import { useTrucks } from '@/context/TruckContext';
 import TruckFormModel from '@/components/TruckFormModel';
 import AllTrucksFilters from '@/components/Filters';
+import { TruckStatus } from '@/lib/types';
+import { updateTruckStatus } from '@/lib/actions';
 import '@/styles/_trucks.scss';
 
-export default function page() {
+export default function Page() {
   const { trucks } = useTrucks();
+  const queryClient = useQueryClient();
   const { initialData, selectedOption, SetSelectedOption } = useTrucks();
   const options = ['All Trucks', 'Available', 'Delivering', 'Maintenance'];
+
+  const updateStatusMutation = useMutation({
+    mutationFn: ({ id, status }: { id: string; status: TruckStatus }) =>
+      updateTruckStatus(id, status),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
+    },
+    onError: (error: Error) => {
+      console.error('Failed to update truck status:', error);
+    },
+  });
+
+  const handleChangeStatus = (id: string) => {
+    const truck = trucks?.find((t) => t.id === id);
+    if (truck) {
+      const newStatus =
+        truck.status === TruckStatus.AVAILABLE
+          ? TruckStatus.DELIVERING
+          : TruckStatus.AVAILABLE;
+      updateStatusMutation.mutate({ id, status: newStatus });
+    }
+  };
 
   return (
     <div className="rightside__content__body">
@@ -37,8 +63,22 @@ export default function page() {
               <p>Plate Number: {truck.plate_number}</p>
             </div>
             <div className="truck__card__footer">
-              <input type="checkbox" />
-              <label htmlFor="">Mark as available</label>
+              {truck.status !== TruckStatus.MAINTENANCE && (
+                <>
+                  <input
+                    name="status"
+                    type="checkbox"
+                    onChange={() => handleChangeStatus(truck.id)}
+                    checked={truck.status === TruckStatus.DELIVERING}
+                    disabled={updateStatusMutation.isPending}
+                  />
+                  <label htmlFor="status">
+                    {truck.status === TruckStatus.DELIVERING
+                      ? 'Delivering'
+                      : 'Available'}
+                  </label>
+                </>
+              )}
             </div>
           </div>
         ))}

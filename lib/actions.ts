@@ -2,12 +2,18 @@
 
 import { Truck, TruckStatus } from './types';
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.API_URL || 'http://localhost:3001';
 
 type FilterType = { query?: string };
 
 export async function getTrucks({ query }: FilterType): Promise<Truck[]> {
   const response = await fetch(`${API_URL}/trucks?${query}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch trucks: ${errorText}`);
+  }
+
   return await response.json();
 }
 
@@ -18,6 +24,35 @@ export async function createTruck(
   const response = await fetch(`${API_URL}/trucks`, {
     method: 'POST',
     body: JSON.stringify(newTruck),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create truck: ${errorText}`);
+  }
+
+  return await response.json();
+}
+
+export async function updateTruckStatus(
+  id: string,
+  status: TruckStatus
+): Promise<Truck> {
+  const response = await fetch(`${API_URL}/trucks/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to update truck status: ${errorText}`);
+  }
+
   return await response.json();
 }
