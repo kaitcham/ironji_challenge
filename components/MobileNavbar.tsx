@@ -27,6 +27,7 @@ export default function MobileNavbar() {
           <CloseButton
             as={Link}
             href="/dashboard"
+            onClick={() => setOpenMenu((prev) => !prev)}
             className={pathname === '/dashboard' ? 'active' : ''}
           >
             Trucks
@@ -34,6 +35,7 @@ export default function MobileNavbar() {
           <CloseButton
             as={Link}
             href="/drivers"
+            onClick={() => setOpenMenu((prev) => !prev)}
             className={pathname === '/drivers' ? 'active' : ''}
           >
             Drivers
@@ -41,6 +43,7 @@ export default function MobileNavbar() {
           <CloseButton
             as={Link}
             href="/orders"
+            onClick={() => setOpenMenu((prev) => !prev)}
             className={pathname === '/orders' ? 'active' : ''}
           >
             Orders
