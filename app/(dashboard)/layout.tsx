@@ -12,8 +12,8 @@ export default function DashboardLayout({
       <div className="dashboard__inner__container">
         <SideNavbar />
         <div className="dashboard__inner__container__rightside">
+          <TopNavbar />
           <div className="dashboard__inner__container__rightside__content">
-            <TopNavbar />
             <ReactQueryProvider>
               <TruckProvider>{children}</TruckProvider>
             </ReactQueryProvider>

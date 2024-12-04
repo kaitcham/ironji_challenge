@@ -1,6 +1,7 @@
 @use 'abstracts' as *;
 
 .rightside__content__topbar {
+  width: 100%;
   @include flex;
   padding: 0.75rem;
   background: white;
@@ -92,7 +93,7 @@
   }
 
   @include media('md') {
-    padding: 1.17rem;
+    padding: 1rem;
     .search__field {
       width: 40%;
     }
