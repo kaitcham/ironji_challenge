@@ -1,5 +1,5 @@
 'use client';
-import { useTrucks } from '@/context/TruckContext';
+
 import FilterOption from './FilterOption';
 
 interface FiltersProps<T> {
@@ -10,7 +10,7 @@ interface FiltersProps<T> {
   SetSelectedOption: (option: string) => void;
 }
 
-export default function AllTrucksFilters<T>({
+export default function Filters<T>({
   name,
   options,
   initialData,
@@ -28,9 +28,9 @@ export default function AllTrucksFilters<T>({
         <FilterOption
           key={option}
           text={option}
-          action={() => SetSelectedOption(option)}
-          isActive={selectedOption === option}
           number={getNumber(option)}
+          isActive={selectedOption === option}
+          action={() => SetSelectedOption(option)}
         />
       ))}
       <div className="filter__btn">
