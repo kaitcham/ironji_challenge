@@ -1,15 +1,15 @@
 'use client';
 import { Truck } from '@/lib/types';
 import { getTrucks } from '@/lib/actions';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Loading from '@/components/Loading';
 
 export type TruckContextType = {
-  initialData: Truck[];
+  isPending?: boolean;
+  error: Error | null;
+  filteredData: Truck[];
   selectedOption: string;
   trucks: Truck[] | undefined;
-  refetch?: () => void;
   SetSelectedOption: (option: string) => void;
 };
 
@@ -18,38 +18,28 @@ export const TruckContext = createContext<TruckContextType>(
 );
 
 export const TruckProvider = ({ children }: { children: React.ReactNode }) => {
-  const [initialData, SetInitialData] = useState<Truck[]>([]);
   const [selectedOption, SetSelectedOption] = useState('All Trucks');
-  const query =
-    selectedOption === 'All Trucks' ? '' : `status=${selectedOption}`;
 
-  const {
-    isPending,
-    isError,
-    data: trucks,
-    error,
-    refetch,
-  } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ['trucks', selectedOption],
-    queryFn: () => getTrucks({ query }),
+    queryFn: () => getTrucks(),
   });
 
-  useEffect(() => {
-    if (trucks && initialData.length === 0) SetInitialData([...trucks]);
-    else return;
-  }, [trucks]);
-
-  if (isPending) return <Loading />;
-  if (isError) return <span>Error: {error.message}</span>;
+  const filteredData = useMemo(() => {
+    if (!data) return [];
+    if (selectedOption === 'All Trucks') return data;
+    return data.filter((truck) => truck.status === selectedOption);
+  }, [data, selectedOption]);
 
   return (
     <TruckContext.Provider
       value={{
-        initialData,
-        trucks,
+        isPending,
+        error,
+        trucks: data,
+        filteredData,
         selectedOption,
         SetSelectedOption,
-        refetch,
       }}
     >
       {children}
