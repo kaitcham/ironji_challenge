@@ -2,14 +2,14 @@
 
 import { useState } from 'react';
 import { truckFormSchema } from '@/lib/schemas';
-import { QueryClient, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTruck } from '@/lib/actions';
 import { useTrucks } from '@/context/TruckContext';
 import { toast } from 'sonner';
 
 export default function TruckFormModel() {
-  const queryClient = new QueryClient();
-  const { initialData, selectedOption, refetch } = useTrucks();
+  const queryClient = useQueryClient();
+  const { trucks, selectedOption } = useTrucks();
   const [errors, SetErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     capacity: 0,
@@ -20,10 +20,9 @@ export default function TruckFormModel() {
     mutationFn: createTruck,
     onSuccess: () => {
       setFormData({ capacity: 0, plate_number: '' });
-      queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
       document.getElementById('truck-form')?.hidePopover();
-      refetch?.();
-      return toast.success('Truck added successfully');
+      toast.success('Truck added successfully');
+      queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
     },
     onError: (error: Error) => {
       return toast.error(error.message);
@@ -36,7 +35,7 @@ export default function TruckFormModel() {
     try {
       const { capacity, plate_number } = formData;
       const validated = truckFormSchema.parse({ capacity, plate_number });
-      const newTruck = { ...validated, id: String(initialData.length + 1) };
+      const newTruck = { ...validated, id: String(trucks!.length + 1) };
       createMutation.mutate(newTruck);
     } catch (error: any) {
       SetErrors(error.formErrors.fieldErrors);
