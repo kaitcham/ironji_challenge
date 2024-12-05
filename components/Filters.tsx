@@ -7,6 +7,7 @@ interface FiltersProps<T> {
   initialData: T[];
   options: string[];
   selectedOption: string;
+  SetItemToEdit: () => void;
   SetSelectedOption: (option: string) => void;
 }
 
@@ -15,6 +16,7 @@ export default function Filters<T>({
   options,
   initialData,
   selectedOption,
+  SetItemToEdit,
   SetSelectedOption,
 }: FiltersProps<T>) {
   const getNumber = (option: string) =>
@@ -34,7 +36,7 @@ export default function Filters<T>({
         />
       ))}
       <div className="filter__btn">
-        <button popoverTarget="truck-form">
+        <button onClick={SetItemToEdit} popoverTarget="truck-form">
           <span>+</span>
           <span>New {name}</span>
         </button>

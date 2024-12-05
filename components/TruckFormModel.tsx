@@ -1,23 +1,31 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { truckFormSchema } from '@/lib/schemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createTruck } from '@/lib/actions';
+import { createTruck, updateTruck } from '@/lib/actions';
 import { useTrucks } from '@/context/TruckContext';
 import { toast } from 'sonner';
+import { Truck } from '@/lib/types';
 
 export default function TruckFormModel() {
   const queryClient = useQueryClient();
-  const { trucks, selectedOption } = useTrucks();
+  const { trucks, truckToEdit, selectedOption } = useTrucks();
   const [errors, SetErrors] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState({
-    capacity: 0,
-    plate_number: '',
-  });
+  const [formData, setFormData] = useState({ capacity: 0, plate_number: '' });
 
-  const createMutation = useMutation({
-    mutationFn: createTruck,
+  const truckMutation = useMutation({
+    mutationFn: ({
+      id,
+      newTruck,
+    }: {
+      id: string;
+      newTruck: Omit<Truck, 'id' | 'status'>;
+    }) => {
+      return !truckToEdit
+        ? createTruck({ id, ...newTruck })
+        : updateTruck(id, newTruck);
+    },
     onSuccess: () => {
       setFormData({ capacity: 0, plate_number: '' });
       document.getElementById('truck-form')?.hidePopover();
@@ -35,12 +43,22 @@ export default function TruckFormModel() {
     try {
       const { capacity, plate_number } = formData;
       const validated = truckFormSchema.parse({ capacity, plate_number });
-      const newTruck = { ...validated, id: String(trucks!.length + 1) };
-      createMutation.mutate(newTruck);
+      truckMutation.mutate({
+        id: truckToEdit?.id || String(trucks!.length + 1),
+        newTruck: validated,
+      });
     } catch (error: any) {
       SetErrors(error.formErrors.fieldErrors);
     }
   };
+
+  useEffect(() => {
+    SetErrors({});
+    setFormData({
+      capacity: truckToEdit?.capacity || 0,
+      plate_number: truckToEdit?.plate_number || '',
+    });
+  }, [truckToEdit]);
 
   return (
     <dialog id="truck-form" popover="auto">
@@ -64,7 +82,9 @@ export default function TruckFormModel() {
                 setFormData({ ...formData, capacity: e.target.valueAsNumber })
               }
             />
-            {errors.capacity && <span>{errors.capacity[0]}</span>}
+            {errors.capacity && (
+              <span className="text-red-500">{errors.capacity[0]}</span>
+            )}
           </div>
 
           <div>
@@ -77,9 +97,13 @@ export default function TruckFormModel() {
                 setFormData({ ...formData, plate_number: e.target.value })
               }
             />
-            {errors.plate_number && <span>{errors.plate_number[0]}</span>}
+            {errors.plate_number && (
+              <span className="text-red-500">{errors.plate_number[0]}</span>
+            )}
           </div>
-          <button type="submit">Add Truck</button>
+          <button type="submit">
+            {truckToEdit ? 'Update Truck' : 'Add Truck'}
+          </button>
         </form>
       </div>
     </dialog>

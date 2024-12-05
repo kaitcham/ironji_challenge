@@ -17,6 +17,7 @@ export default function Page() {
     trucks,
     filteredData,
     selectedOption,
+    SetTruckToEdit,
     SetSelectedOption,
   } = useTrucks();
 
@@ -33,6 +34,7 @@ export default function Page() {
           initialData={trucks!}
           selectedOption={selectedOption}
           SetSelectedOption={SetSelectedOption}
+          SetItemToEdit={() => SetTruckToEdit(null)}
         />
       </div>
       <div className="trucks__container">
@@ -45,7 +47,7 @@ export default function Page() {
               <MoreOption
                 id={truck.id}
                 queryKey={['trucks', selectedOption]}
-                handleEdit={() => {}}
+                handleEdit={() => SetTruckToEdit(truck)}
               />
             </div>
             <div className="truck__card__content">

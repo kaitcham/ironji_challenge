@@ -1,6 +1,6 @@
 import { toast } from 'sonner';
 import { Truck, TruckStatus } from '@/lib/types';
-import { updateTruckStatus } from '@/lib/actions';
+import { updateTruck } from '@/lib/actions';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import '@/styles/_trucks.scss';
 
@@ -14,7 +14,7 @@ export default function TruckStateToggle({
   const queryClient = useQueryClient();
   const updateStatusMutation = useMutation({
     mutationFn: ({ id, status }: { id: string; status: TruckStatus }) =>
-      updateTruckStatus(id, status),
+      updateTruck(id, { status }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
       return toast.success('Status updated successfully');

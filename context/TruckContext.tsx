@@ -9,8 +9,10 @@ export type TruckContextType = {
   error: Error | null;
   filteredData: Truck[];
   selectedOption: string;
+  truckToEdit: Truck | null;
   trucks: Truck[] | undefined;
   SetSelectedOption: (option: string) => void;
+  SetTruckToEdit: (truck: Truck | null) => void;
 };
 
 export const TruckContext = createContext<TruckContextType>(
@@ -19,6 +21,7 @@ export const TruckContext = createContext<TruckContextType>(
 
 export const TruckProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedOption, SetSelectedOption] = useState('All Trucks');
+  const [truckToEdit, SetTruckToEdit] = useState<Truck | null>(null);
 
   const { isPending, error, data } = useQuery({
     queryKey: ['trucks', selectedOption],
@@ -34,11 +37,13 @@ export const TruckProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <TruckContext.Provider
       value={{
-        isPending,
         error,
+        isPending,
+        truckToEdit,
         trucks: data,
         filteredData,
         selectedOption,
+        SetTruckToEdit,
         SetSelectedOption,
       }}
     >

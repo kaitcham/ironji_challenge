@@ -51,7 +51,12 @@ export default function MoreOption({
       >
         <MenuItems className="more__options__container">
           <div>
-            <MenuItem as="button" className="item">
+            <MenuItem
+              as="button"
+              className="item"
+              onClick={handleEdit}
+              popoverTarget="truck-form"
+            >
               Edit
             </MenuItem>
           </div>

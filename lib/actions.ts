@@ -37,13 +37,13 @@ export async function createTruck(
   return await response.json();
 }
 
-export async function updateTruckStatus(
+export async function updateTruck(
   id: string,
-  status: TruckStatus
+  changes: Partial<Omit<Truck, 'id'>>
 ): Promise<Truck> {
   const response = await fetch(`${API_URL}/trucks/${id}`, {
     method: 'PATCH',
-    body: JSON.stringify({ status }),
+    body: JSON.stringify({ ...changes }),
     headers: {
       'Content-Type': 'application/json',
     },
