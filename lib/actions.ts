@@ -78,3 +78,21 @@ export async function getDrivers(query?: FilterType): Promise<Driver[]> {
 
   return await response.json();
 }
+
+export async function assignTruck(
+  driverId: string,
+  truck: Truck
+): Promise<void> {
+  const response = await fetch(`${API_URL}/drivers/${driverId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ assigned_truck: truck }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to assign truck: ${errorText}`);
+  }
+}

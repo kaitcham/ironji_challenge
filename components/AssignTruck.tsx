@@ -1,21 +1,39 @@
 'use client';
 
+import { useState } from 'react';
 import { useTrucks } from '@/context/TruckContext';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Truck } from '@/lib/types';
+import { assignTruck } from '@/lib/actions';
 import { useDrivers } from '../context/DriverContext';
+import { toast } from 'sonner';
 
 export default function AssignTruck() {
   const { trucks } = useTrucks();
-  const { driverToEdit } = useDrivers();
+  const queryClient = useQueryClient();
+  const { driverToEdit, selectedOption } = useDrivers();
   const [selectedTruck, setSelectedTruck] = useState<string>('');
   const availableTrucks = trucks?.filter((t) => t.status === 'Available');
+
+  const assignTruckMutation = useMutation({
+    mutationFn: ({ driverId, truck }: { driverId: string; truck: Truck }) =>
+      assignTruck(driverId, truck),
+    onSuccess: () => {
+      setSelectedTruck('');
+      queryClient.invalidateQueries({ queryKey: ['drivers', selectedOption] });
+      document.getElementById('assign-truck')?.hidePopover();
+    },
+    onError: (error) => {
+      return toast.error(error.message);
+    },
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const truck = availableTrucks?.find((truck) => truck.id === selectedTruck);
     if (!truck) return;
-    console.log(driverToEdit?.id, truck);
+    assignTruckMutation.mutate({ driverId: driverToEdit!.id, truck });
   };
 
   return (
