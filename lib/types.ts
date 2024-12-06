@@ -10,3 +10,11 @@ export interface Truck {
   status: TruckStatus;
   plate_number: string;
 }
+
+export interface Driver {
+  id: string;
+  name: string;
+  license_number: string;
+  contact_number: string;
+  assigned_truck?: Truck;
+}
