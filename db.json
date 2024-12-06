@@ -29,12 +29,39 @@
       "plate_number": "MNO345",
       "capacity": 80,
       "status": "Delivering"
+    }
+  ],
+  "drivers": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "license_number": "XYZ789",
+      "contact_number": "555-123-4567",
+      "assigned_truck": {
+        "id": "3",
+        "plate_number": "GHI789",
+        "capacity": 40,
+        "status": "Delivering"
+      }
     },
     {
-      "id": "6",
-      "capacity": 100,
-      "plate_number": "ABC123",
-      "status": "Available"
+      "id": 2,
+      "name": "Jane Smith",
+      "license_number": "ABC987",
+      "contact_number": "555-234-5678",
+      "assigned_truck": {
+        "id": "5",
+        "plate_number": "MNO345",
+        "capacity": 80,
+        "status": "Delivering"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Mike Johnson",
+      "license_number": "DEF456",
+      "contact_number": "555-345-6789",
+      "assigned_truck": null
     }
   ]
 }

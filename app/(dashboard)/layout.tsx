@@ -2,7 +2,8 @@ import '@/styles/_dashboard.scss';
 import TopNavbar from '@/components/TopNavbar';
 import SideNavbar from '@/components/SideNavbar';
 import ReactQueryProvider from '@/app/providers';
-import { TruckProvider } from '../../context/TruckContext';
+import { TruckProvider } from '@/context/TruckContext';
+import { DriverProvider } from '@/context/DriverContext';
 
 export default function DashboardLayout({
   children,
@@ -15,7 +16,9 @@ export default function DashboardLayout({
           <TopNavbar />
           <div className="dashboard__inner__container__rightside__content">
             <ReactQueryProvider>
-              <TruckProvider>{children}</TruckProvider>
+              <TruckProvider>
+                <DriverProvider>{children}</DriverProvider>
+              </TruckProvider>
             </ReactQueryProvider>
           </div>
         </div>
