@@ -59,3 +59,76 @@ button {
     transform: rotate(360deg);
   }
 }
+
+.popover-form {
+  width: 90%;
+  border: none;
+  margin: auto;
+  padding: 1rem;
+
+  .icon {
+    top: 1rem;
+    right: 1rem;
+    border: none;
+    cursor: pointer;
+    background: none;
+    position: absolute;
+    filter: grayscale(100%);
+  }
+
+  .content {
+    padding-top: 1rem;
+
+    form {
+      gap: 0.5rem;
+      padding: 1rem 0;
+      @include flex-column(flex-start, flex-start);
+
+      div {
+        width: 100%;
+        gap: 0.25rem;
+        @include flex-column(flex-start, flex-start);
+
+        input,
+        select {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #ccc;
+          border-radius: 0.25rem;
+
+          &:focus {
+            outline: none;
+            border-color: $primaryColor;
+          }
+        }
+      }
+
+      button {
+        display: block;
+        width: fit-content;
+        margin-top: 20px;
+        padding: 10px 20px;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        background: $primaryColor;
+        margin-left: auto;
+      }
+    }
+  }
+
+  &::backdrop {
+    background-color: #0005;
+  }
+
+  @include media('md') {
+    width: 450px;
+    padding: 1.5rem 2rem;
+    border-radius: 5px;
+
+    .content {
+      padding-top: 1.5rem;
+    }
+  }
+}

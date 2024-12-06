@@ -61,7 +61,7 @@ export default function TruckFormModel() {
   }, [truckToEdit]);
 
   return (
-    <dialog id="truck-form" popover="auto">
+    <dialog id="truck-form" popover="auto" className="popover-form">
       <button
         className="icon"
         popoverTarget="truck-form"
