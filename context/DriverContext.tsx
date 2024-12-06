@@ -8,14 +8,17 @@ export interface DriveContextType {
   isPending: boolean;
   error: Error | null;
   selectedOption: string;
+  driverToEdit: Driver | null;
   drivers: Driver[] | undefined;
   SetSelectedOption: (option: string) => void;
+  SetDriverToEdit: (driver: Driver | null) => void;
 }
 
 export const DriverContext = createContext({} as DriveContextType);
 
 export const DriverProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedOption, SetSelectedOption] = useState('All Drivers');
+  const [driverToEdit, SetDriverToEdit] = useState<Driver | null>(null);
 
   const { isPending, data, error } = useQuery({
     queryKey: ['drivers', selectedOption],
@@ -28,7 +31,9 @@ export const DriverProvider = ({ children }: { children: React.ReactNode }) => {
         isPending,
         error,
         drivers: data,
+        driverToEdit,
         selectedOption,
+        SetDriverToEdit,
         SetSelectedOption,
       }}
     >

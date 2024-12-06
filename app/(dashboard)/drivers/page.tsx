@@ -3,12 +3,19 @@ import Filters from '@/components/Filters';
 import Loading from '@/components/Loading';
 import { useDrivers } from '@/context/DriverContext';
 import Error from '@/components/Error';
+import AssignTruck from '@/components/AssignTruck';
 import '@/styles/_trucks.scss';
 
 export default function page() {
   const options = ['All Drivers'];
-  const { isPending, error, drivers, selectedOption, SetSelectedOption } =
-    useDrivers();
+  const {
+    isPending,
+    error,
+    drivers,
+    selectedOption,
+    SetDriverToEdit,
+    SetSelectedOption,
+  } = useDrivers();
 
   if (isPending) return <Loading />;
   if (error) return <Error error={error} />;
@@ -48,7 +55,7 @@ export default function page() {
 
           <tbody className="divide-y divide-gray-200">
             {drivers?.map((driver) => (
-              <tr>
+              <tr key={driver.id}>
                 <td className="whitespace-nowrap px-4 py-3 text-gray-900">
                   {driver.name}
                 </td>
@@ -62,6 +69,7 @@ export default function page() {
                   {driver.assigned_truck?.plate_number ?? (
                     <button
                       popoverTarget="assign-truck"
+                      onClick={() => SetDriverToEdit(driver)}
                       className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >
                       + Truck
@@ -81,6 +89,7 @@ export default function page() {
           </tbody>
         </table>
       </div>
+      <AssignTruck />
     </div>
   );
 }
