@@ -5,6 +5,7 @@ import { useDrivers } from '@/context/DriverContext';
 import Error from '@/components/Error';
 import AssignTruck from '@/components/AssignTruck';
 import '@/styles/_trucks.scss';
+import DeleteModel from '@/components/DeleteModel';
 
 export default function page() {
   const options = ['All Drivers'];
@@ -80,9 +81,7 @@ export default function page() {
                   <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     Edit
                   </button>
-                  <button className="font-medium text-red-600 dark:text-red-500 hover:underline ms-4">
-                    Remove
-                  </button>
+                  <DeleteModel driver={driver} />
                 </td>
               </tr>
             ))}

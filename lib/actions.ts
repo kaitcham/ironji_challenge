@@ -96,3 +96,14 @@ export async function assignTruck(
     throw new Error(`Failed to assign truck: ${errorText}`);
   }
 }
+
+export async function deleteDriver(id: string): Promise<void> {
+  const response = await fetch(`${API_URL}/drivers/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to delete driver: ${errorText}`);
+  }
+}
