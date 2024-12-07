@@ -4,6 +4,7 @@ import FilterOption from './FilterOption';
 
 interface FiltersProps<T> {
   name: string;
+  target: string;
   initialData: T[];
   options: string[];
   selectedOption: string;
@@ -13,6 +14,7 @@ interface FiltersProps<T> {
 
 export default function Filters<T>({
   name,
+  target,
   options,
   initialData,
   selectedOption,
@@ -36,7 +38,7 @@ export default function Filters<T>({
         />
       ))}
       <div className="filter__btn">
-        <button onClick={SetItemToEdit} popoverTarget="truck-form">
+        <button onClick={SetItemToEdit} popoverTarget={`${target}-form`}>
           <span>+</span>
           <span>New {name}</span>
         </button>

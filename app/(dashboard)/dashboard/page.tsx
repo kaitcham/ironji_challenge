@@ -30,6 +30,7 @@ export default function Page() {
         <h1>Dashboard</h1>
         <Filters
           name="Truck"
+          target="truck"
           options={options}
           initialData={trucks!}
           selectedOption={selectedOption}
