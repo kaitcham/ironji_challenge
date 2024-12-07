@@ -1,64 +1,53 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { truckFormSchema } from '@/lib/schemas';
+import { useEffect } from 'react';
+import { TruckFormData, truckFormSchema } from '@/lib/schemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createTruck, updateTruck } from '@/lib/actions';
 import { useTrucks } from '@/context/TruckContext';
 import { toast } from 'sonner';
-import { Truck } from '@/lib/types';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function TruckFormModel() {
   const queryClient = useQueryClient();
   const { trucks, truckToEdit, selectedOption } = useTrucks();
-  const [errors, SetErrors] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState({ capacity: 0, plate_number: '' });
+  const {
+    setValue,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TruckFormData>({
+    resolver: zodResolver(truckFormSchema),
+  });
+
+  const toastMessage = !truckToEdit
+    ? 'Truck added successfully'
+    : 'Truck updated successfully';
 
   const truckMutation = useMutation({
-    mutationFn: ({
-      id,
-      newTruck,
-    }: {
-      id: string;
-      newTruck: Omit<Truck, 'id' | 'status'>;
-    }) => {
-      return !truckToEdit
-        ? createTruck({ id, ...newTruck })
-        : updateTruck(id, newTruck);
-    },
+    mutationFn: (data: TruckFormData) =>
+      truckToEdit
+        ? updateTruck(truckToEdit!.id, data)
+        : createTruck({ id: String(trucks!.length + 1), ...data }),
     onSuccess: () => {
-      setFormData({ capacity: 0, plate_number: '' });
+      toast.success(toastMessage);
       document.getElementById('truck-form')?.hidePopover();
-      toast.success('Truck added successfully');
       queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
     },
-    onError: (error: Error) => {
+    onError: (error) => {
       return toast.error(error.message);
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const { capacity, plate_number } = formData;
-      const validated = truckFormSchema.parse({ capacity, plate_number });
-      truckMutation.mutate({
-        id: truckToEdit?.id || String(trucks!.length + 1),
-        newTruck: validated,
-      });
-    } catch (error: any) {
-      SetErrors(error.formErrors.fieldErrors);
-    }
+  const handleSubmitForm = (data: TruckFormData) => {
+    truckMutation.mutate(data);
   };
 
   useEffect(() => {
-    SetErrors({});
-    setFormData({
-      capacity: truckToEdit?.capacity || 0,
-      plate_number: truckToEdit?.plate_number || '',
-    });
-  }, [truckToEdit]);
+    setValue('capacity', truckToEdit?.capacity || 0);
+    setValue('plate_number', truckToEdit?.plate_number || '');
+  }, [truckToEdit, setValue]);
 
   return (
     <dialog id="truck-form" popover="auto" className="popover-form">
@@ -70,35 +59,28 @@ export default function TruckFormModel() {
         ❌
       </button>
       <div className="content">
-        <h3>Add New Truck</h3>
-        <form onSubmit={handleSubmit}>
+        <h3>{truckToEdit ? 'Edit Truck' : 'Add Truck'}</h3>
+        <form onSubmit={handleSubmit(handleSubmitForm)}>
           <div>
             <label htmlFor="capacity">Capacity:</label>
             <input
               type="number"
-              name="capacity"
-              value={formData.capacity}
-              onChange={(e) =>
-                setFormData({ ...formData, capacity: e.target.valueAsNumber })
-              }
+              {...register('capacity', { valueAsNumber: true })}
             />
             {errors.capacity && (
-              <span className="text-red-500">{errors.capacity[0]}</span>
+              <span className="text-xs text-red-500">
+                {errors.capacity.message}
+              </span>
             )}
           </div>
 
           <div>
-            <label htmlFor="plateNumber">Plate Number:</label>
-            <input
-              type="text"
-              name="plateNumber"
-              value={formData.plate_number}
-              onChange={(e) =>
-                setFormData({ ...formData, plate_number: e.target.value })
-              }
-            />
+            <label htmlFor="plate_number">Plate Number:</label>
+            <input type="text" {...register('plate_number')} />
             {errors.plate_number && (
-              <span className="text-red-500">{errors.plate_number[0]}</span>
+              <span className="text-xs text-red-500">
+                {errors.plate_number.message}
+              </span>
             )}
           </div>
           <button type="submit">
