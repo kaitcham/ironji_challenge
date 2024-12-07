@@ -97,6 +97,23 @@ export async function assignTruck(
   }
 }
 
+export async function createDriver(driver: Omit<Driver, 'assigned_truck'>) {
+  const response = await fetch(`${API_URL}/drivers`, {
+    method: 'POST',
+    body: JSON.stringify(driver),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create driver: ${errorText}`);
+  }
+
+  return await response.json();
+}
+
 export async function deleteDriver(id: string): Promise<void> {
   const response = await fetch(`${API_URL}/drivers/${id}`, {
     method: 'DELETE',
