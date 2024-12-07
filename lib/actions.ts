@@ -98,9 +98,10 @@ export async function assignTruck(
 }
 
 export async function createDriver(driver: Omit<Driver, 'assigned_truck'>) {
+  const newDriver = { ...driver, assigned_truck: null };
   const response = await fetch(`${API_URL}/drivers`, {
     method: 'POST',
-    body: JSON.stringify(driver),
+    body: JSON.stringify(newDriver),
     headers: {
       'Content-Type': 'application/json',
     },
@@ -109,6 +110,26 @@ export async function createDriver(driver: Omit<Driver, 'assigned_truck'>) {
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to create driver: ${errorText}`);
+  }
+
+  return await response.json();
+}
+
+export async function updateDriver(
+  id: string,
+  changes: Partial<Omit<Driver, 'id'>>
+): Promise<Driver> {
+  const response = await fetch(`${API_URL}/drivers/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ ...changes }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to update driver: ${errorText}`);
   }
 
   return await response.json();
