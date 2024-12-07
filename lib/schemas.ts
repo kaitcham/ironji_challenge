@@ -12,4 +12,11 @@ export const truckFormSchema = z.object({
     .regex(/^[A-Z]{3}[0-9]{3}$/, 'Invalid plate number format Eg. ABC123'),
 });
 
+export const driverFormSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  license_number: z.string().min(1, 'License number is required'),
+  contact_number: z.string().min(1, 'Contact number is required'),
+});
+
 export type TruckFormData = z.infer<typeof truckFormSchema>;
+export type DriverFormData = z.infer<typeof driverFormSchema>;

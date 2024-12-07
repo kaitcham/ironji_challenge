@@ -6,6 +6,7 @@ import Error from '@/components/Error';
 import AssignTruck from '@/components/AssignTruck';
 import '@/styles/_trucks.scss';
 import DeleteModel from '@/components/DeleteModel';
+import DriverFormModel from '../../../components/DriverFormModel';
 
 export default function page() {
   const options = ['All Drivers'];
@@ -26,6 +27,7 @@ export default function page() {
       <h1>Drivers</h1>
       <Filters
         name="Driver"
+        target="driver"
         options={options}
         initialData={drivers!}
         selectedOption={selectedOption}
@@ -89,6 +91,7 @@ export default function page() {
         </table>
       </div>
       <AssignTruck />
+      <DriverFormModel />
     </div>
   );
 }
