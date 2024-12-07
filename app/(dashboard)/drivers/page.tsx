@@ -31,8 +31,8 @@ export default function page() {
         options={options}
         initialData={drivers!}
         selectedOption={selectedOption}
-        SetItemToEdit={() => {}}
         SetSelectedOption={SetSelectedOption}
+        SetItemToEdit={() => SetDriverToEdit(null)}
       />
       <div className="overflow-auto mt-6 lg:max-w-4xl rounded-t-lg">
         <table className="w-full h-auto divide-y-2 divide-gray-200 bg-white text-sm">
@@ -80,7 +80,11 @@ export default function page() {
                   )}
                 </td>
                 <td className="flex items-center whitespace-nowrap px-4 py-3 text-gray-700">
-                  <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                  <button
+                    popoverTarget="driver-form"
+                    onClick={() => SetDriverToEdit(driver)}
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
                     Edit
                   </button>
                   <DeleteModel driver={driver} />
