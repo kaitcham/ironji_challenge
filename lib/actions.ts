@@ -1,6 +1,6 @@
 'use server';
 
-import { Driver, Truck, TruckStatus } from './types';
+import { Driver, Order, Truck, TruckStatus } from './types';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 
@@ -144,4 +144,15 @@ export async function deleteDriver(id: string): Promise<void> {
     const errorText = await response.text();
     throw new Error(`Failed to delete driver: ${errorText}`);
   }
+}
+
+export async function getOrders(query?: FilterType): Promise<Order[]> {
+  const response = await fetch(`${API_URL}/orders?${query}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to fetch orders: ${errorText}`);
+  }
+
+  return await response.json();
 }

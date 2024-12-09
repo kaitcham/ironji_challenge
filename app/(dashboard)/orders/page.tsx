@@ -1,26 +1,20 @@
 'use client';
-import { useState } from 'react';
 import Filters from '@/components/Filters';
-import { useQuery } from '@tanstack/react-query';
 import Error from '@/components/Error';
 import Loading from '@/components/Loading';
 import OrderCard from '@/components/OrderCard';
+import { useOrder } from '@/context/OrderContext';
 
 export default function page() {
-  const [selectedOption, SetSelectedOption] = useState('All Orders');
   const options = ['All Orders', 'Pending', 'In Progress', 'Completed'];
-
   const {
     isPending,
-    data: orders,
+    orders,
     error,
-  } = useQuery({
-    queryKey: ['orders', selectedOption],
-    queryFn: async () => {
-      const response = await fetch(`http://localhost:3001/orders`);
-      return await response.json();
-    },
-  });
+    filteredData,
+    selectedOption,
+    setSelectedOption,
+  } = useOrder();
 
   if (isPending) return <Loading />;
   if (error) return <Error error={error} />;
@@ -33,14 +27,14 @@ export default function page() {
           name="Order"
           target="order"
           options={options}
-          initialData={orders}
+          initialData={orders!}
           selectedOption={selectedOption}
-          SetSelectedOption={SetSelectedOption}
+          SetSelectedOption={setSelectedOption}
           SetItemToEdit={() => {}}
         />
       </div>
       <div className="grid gap-8 px-2 py-3 md:px-5 md:grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))]">
-        {orders.map((order: any) => (
+        {filteredData.map((order: any) => (
           <OrderCard key={order.id} order={order} />
         ))}
       </div>
