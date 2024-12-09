@@ -40,8 +40,9 @@ export default function OrderCard({ order }: { order: Order }) {
         <MoreOption
           id={order.id}
           name="Order"
+          targetedForm="order-form"
           queryKey={['orders', 'All Orders']}
-          handleEdit={() => {}}
+          handleEdit={() => setOrderToEdit(order)}
           handleDelete={deleteOrder}
         >
           {assigned_driver && status !== OrderStatus.COMPLETED && (

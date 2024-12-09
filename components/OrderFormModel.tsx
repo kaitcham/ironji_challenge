@@ -1,15 +1,17 @@
 import { toast } from 'sonner';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { OrderFormData, orderFormSchema } from '@/lib/schemas';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useOrder } from '@/context/OrderContext';
-import { createOrder } from '../lib/actions';
+import { createOrder, updateOrder } from '../lib/actions';
 
 export default function OrderFormModel() {
   const queryClient = useQueryClient();
-  const { orders, selectedOption } = useOrder();
+  const { orders, orderToEdit, selectedOption } = useOrder();
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
@@ -17,11 +19,17 @@ export default function OrderFormModel() {
     resolver: zodResolver(orderFormSchema),
   });
 
+  const toastMessage = orderToEdit
+    ? 'Order updated successfully'
+    : 'Order added successfully';
+
   const orderMutation = useMutation({
     mutationFn: (data: OrderFormData) =>
-      createOrder({ id: String(orders!.length + 1), ...data }),
+      orderToEdit
+        ? updateOrder(orderToEdit!.id, data)
+        : createOrder({ id: String(orders!.length + 1), ...data }),
     onSuccess: () => {
-      toast.success('Order added successfully');
+      toast.success(toastMessage);
       document.getElementById('order-form')?.hidePopover();
       queryClient.invalidateQueries({ queryKey: ['orders', selectedOption] });
     },
@@ -34,6 +42,12 @@ export default function OrderFormModel() {
     orderMutation.mutate(data);
   };
 
+  useEffect(() => {
+    setValue('customer_name', orderToEdit?.customer_name || '');
+    setValue('customer_address', orderToEdit?.customer_address || '');
+    setValue('customer_contact', orderToEdit?.customer_contact || '');
+  }, [orderToEdit, setValue]);
+
   return (
     <dialog id="order-form" popover="auto" className="popover-form">
       <button
@@ -44,7 +58,7 @@ export default function OrderFormModel() {
         ❌
       </button>
       <div className="content">
-        <h3>Add Order</h3>
+        <h3>{orderToEdit ? 'Edit Order ' : 'Add Order'}</h3>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div>
             <label htmlFor="name">Name:</label>
@@ -78,7 +92,9 @@ export default function OrderFormModel() {
               </span>
             )}
           </div>
-          <button type="submit">Add Order</button>
+          <button type="submit">
+            {orderToEdit ? 'Update Order' : 'Add Order'}
+          </button>
         </form>
       </div>
     </dialog>

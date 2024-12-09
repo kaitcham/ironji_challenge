@@ -13,6 +13,7 @@ interface MoreOptionProps {
   id: string;
   name: string;
   queryKey: string[];
+  targetedForm: string;
   handleEdit: () => void;
   children?: React.ReactNode;
   handleDelete: (id: string) => Promise<void>;
@@ -24,6 +25,7 @@ export default function MoreOption({
   queryKey,
   children,
   handleEdit,
+  targetedForm,
   handleDelete,
 }: MoreOptionProps) {
   return (
@@ -46,7 +48,7 @@ export default function MoreOption({
               as="button"
               className="item"
               onClick={handleEdit}
-              popoverTarget="truck-form"
+              popoverTarget={targetedForm}
             >
               Edit
             </MenuItem>

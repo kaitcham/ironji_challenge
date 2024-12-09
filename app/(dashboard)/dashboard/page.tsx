@@ -49,6 +49,7 @@ export default function Page() {
               <MoreOption
                 id={truck.id}
                 name="Truck"
+                targetedForm="truck-form"
                 queryKey={['trucks', selectedOption]}
                 handleEdit={() => SetTruckToEdit(truck)}
                 handleDelete={deleteTruck}
