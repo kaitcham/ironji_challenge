@@ -18,5 +18,12 @@ export const driverFormSchema = z.object({
   contact_number: z.string().min(1, 'Contact number is required'),
 });
 
+export const orderFormSchema = z.object({
+  customer_name: z.string().min(1, 'Name is required'),
+  customer_address: z.string().min(1, 'Address is required'),
+  customer_contact: z.string().min(1, 'Contact number is required'),
+});
+
 export type TruckFormData = z.infer<typeof truckFormSchema>;
+export type OrderFormData = z.infer<typeof orderFormSchema>;
 export type DriverFormData = z.infer<typeof driverFormSchema>;

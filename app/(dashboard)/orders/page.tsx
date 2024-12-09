@@ -5,6 +5,7 @@ import Loading from '@/components/Loading';
 import OrderCard from '@/components/OrderCard';
 import { useOrder } from '@/context/OrderContext';
 import AssignDriver from '@/components/AssignDriver';
+import OrderFormModel from '@/components/OrderFormModel';
 
 export default function page() {
   const options = ['All Orders', 'Pending', 'In Progress', 'Completed'];
@@ -14,6 +15,7 @@ export default function page() {
     error,
     filteredData,
     selectedOption,
+    setOrderToEdit,
     setSelectedOption,
   } = useOrder();
 
@@ -31,7 +33,7 @@ export default function page() {
           initialData={orders!}
           selectedOption={selectedOption}
           SetSelectedOption={setSelectedOption}
-          SetItemToEdit={() => {}}
+          SetItemToEdit={() => setOrderToEdit(null)}
         />
       </div>
       <div className="grid gap-8 px-2 py-3 md:px-5 md:grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))]">
@@ -40,6 +42,7 @@ export default function page() {
         ))}
       </div>
       <AssignDriver />
+      <OrderFormModel />
     </div>
   );
 }

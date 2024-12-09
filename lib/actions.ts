@@ -1,6 +1,6 @@
 'use server';
 
-import { Driver, Order, Truck, TruckStatus } from './types';
+import { Driver, Order, OrderStatus, Truck, TruckStatus } from './types';
 
 const API_URL = process.env.API_URL || 'http://localhost:3001';
 
@@ -173,6 +173,26 @@ export async function assignOrder(
     const errorText = await response.text();
     throw new Error(`Failed to assign order: ${errorText}`);
   }
+}
+
+export async function createOrder(
+  order: Omit<Order, 'status' | 'assigned_driver'>
+): Promise<Order> {
+  const newOrder = { ...order, status: OrderStatus.PENDING };
+  const response = await fetch(`${API_URL}/orders`, {
+    method: 'POST',
+    body: JSON.stringify(newOrder),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create order: ${errorText}`);
+  }
+
+  return await response.json();
 }
 
 export async function updateOrder(
