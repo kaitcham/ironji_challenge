@@ -174,3 +174,34 @@ export async function assignOrder(
     throw new Error(`Failed to assign order: ${errorText}`);
   }
 }
+
+export async function updateOrder(
+  id: string,
+  changes: Partial<Omit<Order, 'id'>>
+): Promise<Order> {
+  const response = await fetch(`${API_URL}/orders/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ ...changes }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to update order: ${errorText}`);
+  }
+
+  return await response.json();
+}
+
+export async function deleteOrder(id: string): Promise<void> {
+  const response = await fetch(`${API_URL}/orders/${id}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to delete order: ${errorText}`);
+  }
+}

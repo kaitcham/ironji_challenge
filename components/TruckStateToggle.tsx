@@ -1,8 +1,6 @@
-import { toast } from 'sonner';
-import { Truck, TruckStatus } from '@/lib/types';
-import { updateTruck } from '@/lib/actions';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import '@/styles/_trucks.scss';
+import { Truck, TruckStatus } from '@/lib/types';
+import { useCustomMutations } from '@/hooks/useCustomMutations';
 
 export default function TruckStateToggle({
   truck,
@@ -11,21 +9,10 @@ export default function TruckStateToggle({
   truck: Truck;
   selectedOption: string;
 }) {
-  const queryClient = useQueryClient();
-  const updateStatusMutation = useMutation({
-    mutationFn: ({ id, status }: { id: string; status: TruckStatus }) =>
-      updateTruck(id, { status }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['trucks', selectedOption] });
-      return toast.success('Status updated successfully');
-    },
-    onError: (error: Error) => {
-      return toast.error(error.message);
-    },
-  });
+  const { updateTruckStatusMutation } = useCustomMutations();
 
   const handleChange = (id: string, newStatus: TruckStatus) => {
-    updateStatusMutation.mutate({ id, status: newStatus });
+    updateTruckStatusMutation.mutate({ id, status: newStatus });
   };
 
   const statusOptions = {
@@ -61,7 +48,7 @@ export default function TruckStateToggle({
             name="status"
             type="checkbox"
             onChange={action}
-            disabled={updateStatusMutation.isPending}
+            disabled={updateTruckStatusMutation.isPending}
             checked={truck.status !== TruckStatus.AVAILABLE}
             className={
               truck.status === TruckStatus.MAINTENANCE

@@ -1,7 +1,7 @@
 'use client';
 import { toast } from 'sonner';
 import { useState } from 'react';
-import { Driver } from '@/lib/types';
+import { Driver, TruckStatus } from '@/lib/types';
 import { assignOrder } from '@/lib/actions';
 import { useOrder } from '@/context/OrderContext';
 import { useDrivers } from '@/context/DriverContext';
@@ -13,7 +13,9 @@ export default function AssignDriver() {
   const { orderToEdit, selectedOption } = useOrder();
   const queryClient = useQueryClient();
   const [selectedDriver, setSelectedDriver] = useState<string>('');
-  const availableDrivers = drivers?.filter((driver) => driver.assigned_truck);
+  const availableDrivers = drivers?.filter(
+    (driver) => driver.assigned_truck?.status === TruckStatus.AVAILABLE
+  );
 
   const assignDriverMutation = useMutation({
     mutationFn: ({ orderId, driver }: { orderId: string; driver: Driver }) =>

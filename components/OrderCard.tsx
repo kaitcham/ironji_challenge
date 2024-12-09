@@ -1,9 +1,13 @@
-import { Order } from '@/lib/types';
+import { Order, OrderStatus } from '@/lib/types';
 import MoreOption from './MoreOption';
 import { useOrder } from '@/context/OrderContext';
+import { MenuItem } from '@headlessui/react';
+import { deleteOrder } from '@/lib/actions';
+import { useCustomMutations } from '@/hooks/useCustomMutations';
 
 export default function OrderCard({ order }: { order: Order }) {
   const { setOrderToEdit } = useOrder();
+  const { updateOrderStatusMutation } = useCustomMutations();
   const {
     status,
     customer_name,
@@ -11,6 +15,21 @@ export default function OrderCard({ order }: { order: Order }) {
     customer_contact,
     assigned_driver,
   } = order;
+
+  const handleStatusChange = (id: string) => {
+    const newStatus =
+      status === OrderStatus.PENDING
+        ? OrderStatus.DELIVERING
+        : OrderStatus.COMPLETED;
+    updateOrderStatusMutation.mutate({ id, status: newStatus });
+  };
+
+  const moreOptionName =
+    status === OrderStatus.PENDING
+      ? 'In Progress'
+      : status === OrderStatus.DELIVERING
+      ? 'Completed'
+      : null;
 
   return (
     <div className="flex flex-col gap-2 p-3.5 bg-white rounded-lg shadow-md">
@@ -20,9 +39,21 @@ export default function OrderCard({ order }: { order: Order }) {
         </h3>
         <MoreOption
           id={order.id}
+          name="Order"
           queryKey={['orders', 'All Orders']}
           handleEdit={() => {}}
-        />
+          handleDelete={deleteOrder}
+        >
+          {assigned_driver && status !== OrderStatus.COMPLETED && (
+            <MenuItem
+              as="button"
+              className="item"
+              onClick={() => handleStatusChange(order.id)}
+            >
+              {moreOptionName}
+            </MenuItem>
+          )}
+        </MoreOption>
       </div>
       <div>
         <p className="text-base">Name: {customer_name}</p>

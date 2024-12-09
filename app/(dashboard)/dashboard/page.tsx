@@ -3,6 +3,7 @@
 import Error from '@/components/Error';
 import Filters from '@/components/Filters';
 import Loading from '@/components/Loading';
+import { deleteTruck } from '@/lib/actions';
 import MoreOption from '@/components/MoreOption';
 import TruckFormModel from '@/components/TruckFormModel';
 import { useTrucks } from '@/context/TruckContext';
@@ -47,8 +48,10 @@ export default function Page() {
               </span>
               <MoreOption
                 id={truck.id}
+                name="Truck"
                 queryKey={['trucks', selectedOption]}
                 handleEdit={() => SetTruckToEdit(truck)}
+                handleDelete={deleteTruck}
               />
             </div>
             <div className="truck__card__content">

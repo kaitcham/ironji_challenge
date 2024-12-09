@@ -1,4 +1,6 @@
 import { Fragment } from 'react';
+import DeleteModel from './DeleteModel';
+import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import {
   Menu,
   MenuItem,
@@ -6,22 +8,23 @@ import {
   MenuButton,
   Transition,
 } from '@headlessui/react';
-import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteTruck } from '@/lib/actions';
-import { toast } from 'sonner';
-import DeleteModel from './DeleteModel';
 
 interface MoreOptionProps {
   id: string;
+  name: string;
   queryKey: string[];
   handleEdit: () => void;
+  children?: React.ReactNode;
+  handleDelete: (id: string) => Promise<void>;
 }
 
 export default function MoreOption({
   id,
+  name,
   queryKey,
+  children,
   handleEdit,
+  handleDelete,
 }: MoreOptionProps) {
   return (
     <Menu as="div" className="more__options">
@@ -53,13 +56,15 @@ export default function MoreOption({
             <MenuItem>
               <DeleteModel
                 itemId={id}
-                name="Truck"
+                name={name}
                 className="item"
                 queryKey={queryKey}
-                deleteItem={deleteTruck}
+                deleteItem={handleDelete}
               />
             </MenuItem>
           </div>
+          {children && <hr />}
+          {children}
         </MenuItems>
       </Transition>
     </Menu>
