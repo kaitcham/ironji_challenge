@@ -4,6 +4,12 @@ export enum TruckStatus {
   MAINTENANCE = 'Maintenance',
 }
 
+export enum OrderStatus {
+  PENDING = 'Pending',
+  DELIVERING = 'In Progress',
+  COMPLETED = 'Completed',
+}
+
 export interface Truck {
   id: string;
   capacity: number;
@@ -17,4 +23,17 @@ export interface Driver {
   license_number: string;
   contact_number: string;
   assigned_truck?: Truck;
+}
+
+export interface DriverWithTruck extends Driver {
+  assigned_truck: Truck;
+}
+
+export interface Order {
+  id: string;
+  status: OrderStatus;
+  customer_name: string;
+  customer_address: string;
+  customer_contact: string;
+  assigned_driver?: DriverWithTruck;
 }
