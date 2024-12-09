@@ -32,37 +32,6 @@
         color: hsl(0deg 100% 25% / 66%);
         background-color: rgba(255, 0, 0, 0.3);
       }
-
-      .more__options {
-        position: relative;
-
-        &__btn {
-          border: none;
-          background: none;
-        }
-
-        &__container {
-          position: absolute;
-          top: 2rem;
-          right: 0;
-          background: white;
-          width: 200px;
-          border-radius: 0.5rem;
-          box-shadow: 0 0 5px #0003;
-          z-index: 1;
-
-          .item {
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 0.25rem;
-            border: none;
-            background: none;
-            &:hover {
-              background: $primaryColor;
-            }
-          }
-        }
-      }
     }
 
     &__content {
