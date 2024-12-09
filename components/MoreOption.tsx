@@ -10,6 +10,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteTruck } from '@/lib/actions';
 import { toast } from 'sonner';
+import DeleteModel from './DeleteModel';
 
 interface MoreOptionProps {
   id: string;
@@ -22,19 +23,6 @@ export default function MoreOption({
   queryKey,
   handleEdit,
 }: MoreOptionProps) {
-  const queryClient = useQueryClient();
-
-  const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteTruck(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey });
-      return toast.success('Truck deleted successfully');
-    },
-    onError: (error: Error) => {
-      return toast.error(error.message);
-    },
-  });
-
   return (
     <Menu as="div" className="more__options">
       <MenuButton className="more__options__btn">
@@ -62,12 +50,14 @@ export default function MoreOption({
           </div>
           <hr />
           <div>
-            <MenuItem
-              as="button"
-              className="item"
-              onClick={() => deleteMutation.mutate(id)}
-            >
-              Delete
+            <MenuItem>
+              <DeleteModel
+                itemId={id}
+                name="Truck"
+                className="item"
+                queryKey={queryKey}
+                deleteItem={deleteTruck}
+              />
             </MenuItem>
           </div>
         </MenuItems>

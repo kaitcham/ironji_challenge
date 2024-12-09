@@ -7,6 +7,7 @@ import AssignTruck from '@/components/AssignTruck';
 import '@/styles/_trucks.scss';
 import DeleteModel from '@/components/DeleteModel';
 import DriverFormModel from '../../../components/DriverFormModel';
+import { deleteDriver } from '../../../lib/actions';
 
 export default function page() {
   const options = ['All Drivers'];
@@ -87,7 +88,13 @@ export default function page() {
                   >
                     Edit
                   </button>
-                  <DeleteModel driver={driver} />
+                  <DeleteModel
+                    name="Driver"
+                    itemId={driver.id}
+                    deleteItem={deleteDriver}
+                    queryKey={['drivers', selectedOption]}
+                    className="font-medium text-red-600 dark:text-red-500 hover:underline ms-4"
+                  />
                 </td>
               </tr>
             ))}

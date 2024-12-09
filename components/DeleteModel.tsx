@@ -1,21 +1,31 @@
-import { useRef } from 'react';
-import { Driver } from '@/lib/types';
-import { deleteDriver } from '../lib/actions';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useDrivers } from '../context/DriverContext';
 import { toast } from 'sonner';
+import { useRef } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export default function DeleteModel({ driver }: { driver: Driver }) {
+interface DeleteModelProps {
+  name: string;
+  itemId: string;
+  queryKey: string[];
+  className?: string;
+  deleteItem: (id: string) => Promise<void>;
+}
+
+export default function DeleteModel({
+  name,
+  itemId,
+  queryKey,
+  className,
+  deleteItem,
+}: DeleteModelProps) {
   const queryClient = useQueryClient();
-  const { selectedOption } = useDrivers();
   const modelRef = useRef<HTMLDialogElement>(null);
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => deleteDriver(id),
+    mutationFn: (id: string) => deleteItem(id),
     onSuccess: () => {
       modelRef.current?.close();
-      toast.success('Driver deleted successfully');
-      queryClient.invalidateQueries({ queryKey: ['drivers', selectedOption] });
+      queryClient.invalidateQueries({ queryKey });
+      toast.success(`${name} deleted successfully`);
     },
     onError: (error) => {
       return toast.error(error.message);
@@ -26,9 +36,9 @@ export default function DeleteModel({ driver }: { driver: Driver }) {
     <>
       <button
         onClick={() => modelRef.current?.showModal()}
-        className="font-medium text-red-600 dark:text-red-500 hover:underline ms-4"
+        className={className}
       >
-        Remove
+        Delete
       </button>
       <dialog ref={modelRef} className="popover-form">
         <button className="icon" onClick={() => modelRef.current?.close()}>
@@ -36,7 +46,7 @@ export default function DeleteModel({ driver }: { driver: Driver }) {
         </button>
         <div>
           <h3 className="text-lg text-gray-800 pt-5 pb-2">
-            Are you sure you want to delete this driver?
+            {`Are you sure you want to delete this ${name.toLowerCase()}?`}
           </h3>
           <div className="mt-4 flex justify-end">
             <button
@@ -46,7 +56,7 @@ export default function DeleteModel({ driver }: { driver: Driver }) {
               Cancel
             </button>
             <button
-              onClick={() => deleteMutation.mutate(driver.id)}
+              onClick={() => deleteMutation.mutate(itemId)}
               className="px-4 py-2 bg-red-500 text-white ms-4"
             >
               Delete
