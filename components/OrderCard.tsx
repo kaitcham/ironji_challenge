@@ -1,6 +1,9 @@
+import { Order } from '@/lib/types';
 import MoreOption from './MoreOption';
+import { useOrder } from '@/context/OrderContext';
 
-export default function OrderCard({ order }: { order: any }) {
+export default function OrderCard({ order }: { order: Order }) {
+  const { setOrderToEdit } = useOrder();
   const {
     status,
     customer_name,
@@ -49,8 +52,9 @@ export default function OrderCard({ order }: { order: any }) {
         <div className="flex flex-col gap-2">
           <p>To deliver this order, please assign a driver.</p>
           <button
+            popoverTarget="assign-driver"
+            onClick={() => setOrderToEdit(order)}
             className="px-4 py-2 text-white bg-[#2563EB] rounded-md"
-            onClick={() => {}}
           >
             Assign Driver
           </button>

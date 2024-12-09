@@ -9,17 +9,21 @@ export type OrderContextType = {
   isPending?: boolean;
   error: Error | null;
   filteredData: Order[];
-  orders: Order[] | undefined;
   selectedOption: string;
+  orderToEdit: Order | null;
+  orders: Order[] | undefined;
   setSelectedOption: (option: string) => void;
+  setOrderToEdit: (order: Order | null) => void;
 };
 
 export const OrderContext = createContext({} as OrderContextType);
 
 export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedOption, setSelectedOption] = useState('All Orders');
+  const [orderToEdit, setOrderToEdit] = useState<Order | null>(null);
+
   const { isPending, error, data } = useQuery({
-    queryKey: ['trucks', selectedOption],
+    queryKey: ['orders', selectedOption],
     queryFn: () => getOrders(),
   });
 
@@ -34,9 +38,11 @@ export const OrderProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         error,
         isPending,
+        orderToEdit,
         orders: data,
         filteredData,
         selectedOption,
+        setOrderToEdit,
         setSelectedOption,
       }}
     >

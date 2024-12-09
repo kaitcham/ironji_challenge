@@ -4,6 +4,7 @@ import Error from '@/components/Error';
 import Loading from '@/components/Loading';
 import OrderCard from '@/components/OrderCard';
 import { useOrder } from '@/context/OrderContext';
+import AssignDriver from '@/components/AssignDriver';
 
 export default function page() {
   const options = ['All Orders', 'Pending', 'In Progress', 'Completed'];
@@ -38,6 +39,7 @@ export default function page() {
           <OrderCard key={order.id} order={order} />
         ))}
       </div>
+      <AssignDriver />
     </div>
   );
 }

@@ -156,3 +156,21 @@ export async function getOrders(query?: FilterType): Promise<Order[]> {
 
   return await response.json();
 }
+
+export async function assignOrder(
+  orderId: string,
+  driver: Driver
+): Promise<void> {
+  const response = await fetch(`${API_URL}/orders/${orderId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ assigned_driver: driver }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to assign order: ${errorText}`);
+  }
+}
